@@ -17,15 +17,14 @@ func right(i int) int {
 }
 
 func maxHeapify(A []int, n int, i int) {
-    fmt.Println("heapify", i)
     l := left(i)
     r := right(i)
     largest := i
 
-    if l < len(A) && A[l] > A[i] {
+    if l < n && A[l] > A[i] {
         largest = l
     }
-    if r < len(A) && A[r] > A[largest] {
+    if r < n && A[r] > A[largest] {
         largest = r
     }
 
@@ -35,19 +34,19 @@ func maxHeapify(A []int, n int, i int) {
     }
 }
 
-func buildMaxHeap(A []int) {
-    for i := len(A) / 2 - 1; i >= 0; i -- {
-        maxHeapify(A, len(A), i)
+func buildMaxHeap(A []int, n int) {
+    for i := n / 2 - 1; i >= 0; i -- {
+        maxHeapify(A, n, i)
     }
 }
 
 func heapSort(A []int) {
-    buildMaxHeap(A)
     n := len(A)
-    for i := len(A) - 1; i > 0; i -- {
+    buildMaxHeap(A, n)
+    for i := n - 1; i > 0; i -- {
         A[i], A[0] = A[0], A[i]
-        maxHeapify(A, n, 0)
         n -= 1
+        maxHeapify(A, n, 0)
     }
 }
 
@@ -60,7 +59,7 @@ func main() {
     B := []int{1, 7, 5, 6, 2, 3, 0}
 
     fmt.Println("before buildMaxHeap", B)
-    buildMaxHeap(B)
+    buildMaxHeap(B, len(B))
     fmt.Println("after buildMaxHeap", B)
 
     C := []int{1, 7, 5, 6, 2, 3, 0}
